@@ -74,7 +74,7 @@ class test_EvalUrlModel extends UnitTestCase {
   		$myUrl = "http://www.cs.utsa$k.edu";
   		$myResult = $this->model->getUrl($myUrl);
   		$this->assertTrue(is_array($myResult));
-  		$this->assertEqual(strcmp($myResult[1], $myUrl), 0);
+  		$this->assertEqual(strcmp($myResult['url_eval'], $myUrl), 0);
   	}
   }
 }
