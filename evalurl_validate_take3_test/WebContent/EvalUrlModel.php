@@ -56,14 +56,14 @@ class EvalUrlModel {
 	}
 	
 	public function getUrl($urlname) {
-		$url = mysqli_real_escape_string($urlname);
+		print_r($urlname);
+		$url = mysqli_real_escape_string($this->con, $urlname);
 	    $sql = "SELECT * FROM urlentry WHERE url_eval='$url'";
 		$myResults = mysqli_query ($this->con, $sql);
 	    if (mysqli_connect_errno()) {
 				$this->error = "Couldn't get a $urlname: " . mysqli_connect_errno();
 			return 0;
 		}
-		print_r($myResult);
 		return mysqli_fetch_array($myResults);
 	}
 	
