@@ -1,21 +1,20 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>URL find URL-NASH entries</title>
+<title>Show all URL-NASH entries</title>
 </head>
 <body>
-<h1>URL-NASH Entry</h1>
+<h1>URL-NASH entries so far</h1>
 
 <section>
 <?php 
 require_once('EvalUrlModel.php');
-require_once('EvalUrl.php');
-print_r($_GET);
+print_r($_POST);
 echo "<br>";
 
 $model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
-$myUrl = $model->getUrl($_GET);
-echo $myURL;
+$model->createUrl($_POST);
+echo $model->getError();
 
 ?>
 <p>
