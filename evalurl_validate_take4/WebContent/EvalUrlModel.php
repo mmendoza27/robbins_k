@@ -6,6 +6,7 @@ class EvalUrlModel {
 	private $userpass;
 	private $dbname;
 	private $con;
+	private $db;
 	private $error;
 	private $results;
 	private $sqlGet = "SELECT * FROM urlentry";
@@ -15,40 +16,37 @@ class EvalUrlModel {
 		$this->username = $username;
 		$this->userpass = $userpass;
 		$this->dbname = $dbname;
-		$this->con = mysqli_connect($this->hostname, $this->username, $this->userpass, $this->dbname);
-		if (mysqli_connect_errno()) {
-			$this->error = "Couldn't connect to database evalurls: " . mysqli_connect_errno();
-		}
 		$this->error = 0;
+		
+		$hostStr = "mysql:host=$hostname;dbname=$dbname;charset=utf8";
+		$this->db = new PDO($hostStr, $username, $userpass);
+		$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		echo "In constructor";
 	}
 	
 	public function createUrl($vals) {
-		if (isset($this->results)) {
-			$this->results->free();
-		    unset($this->results);
-		}
 		$vals = $this->validate($vals);
 		if (!$vals) {
 			return;
 		}
-		extract($vals);
-		$sql =  "INSERT INTO urlentry (url_eval, url_description, url_category)
-		VALUES ('$url_eval', '$url_description', '$url_category')";	
-		if (!mysqli_query($this->con, $sql)) {
-			$this->error = "Couldn't perform the insertion " . mysqli_error($this->con);
-		}
+		$stmt = $this->db->prepare("INSERT INTO urlentry 
+				        (url_eval, url_description, url_category)
+		                VALUES (:url_eval, :url_description, :url_category)");	
+		$stmt->execute($vals);
 	}
 	
 
 	public function getCount() {
-		if (!isset($this->results)){
-			$this->results = mysqli_query ($this->con, $this->sqlGet);
-			if (mysqli_connect_errno()) {
-				$this->error = "Couldn't get a rowset: " . mysqli_connect_errno();
-				return 0;
-			}
-		}
-		return $this->results->num_rows; 	
+// 		if (!isset($this->results)){
+// 			$this->results = mysqli_query ($this->con, $this->sqlGet);
+// 			if (mysqli_connect_errno()) {
+// 				$this->error = "Couldn't get a rowset: " . mysqli_connect_errno();
+// 				return 0;
+// 			}
+// 		}
+// 		return $this->results->num_rows; 
+        return 0;	
 	}
 	
 	public function getError() {
@@ -57,32 +55,17 @@ class EvalUrlModel {
 	
 	public function getUrl($urlname) {
 		print_r($urlname);
-		$url = mysqli_real_escape_string($this->con, $urlname);
-	    $sql = "SELECT * FROM urlentry WHERE url_eval='$url'";
-		$myResults = mysqli_query ($this->con, $sql);
-	    if (mysqli_connect_errno()) {
-				$this->error = "Couldn't get a $urlname: " . mysqli_connect_errno();
-			return 0;
-		}
-		return mysqli_fetch_array($myResults);
+		$stmt = $this->db->prepare("SELECT * FROM urlentry WHERE url_eval=?");
+		$stmt->execute(array($urlname));
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 	
 	public function nextUrl() {
-		if (!isset($this->results)){
-			$this->results = mysqli_query ($this->con, $this->sqlGet);
-			if (mysqli_connect_errno()) {
-				$this->error = "Couldn't get a rowset: " . mysqli_connect_errno();
-				return 0;
-			}
+		if (!isset($this->results) or !$this->results){
+			$this->results = $this->db->query('SELECT * FROM urlentry');
 		}
-		if (!$this->results) {
-			$retval = 0;
-		} else {
-			$retval = mysqli_fetch_array($this->results);
-		}
-		return $retval;
+		return $this->results->fetch(PDO::FETCH_ASSOC);	
 	}
-	
 	
 	public function validate($vals) {
 		$url_eval = trim(filter_var($vals['url_eval'], FILTER_SANITIZE_URL));
