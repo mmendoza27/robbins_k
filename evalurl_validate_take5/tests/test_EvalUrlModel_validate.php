@@ -25,5 +25,25 @@ class test_EvalUrlModel_validate extends UnitTestCase {
 		$this->assertTrue($this->model->getError(),
 				 'The EvalUrlModel error should be set to indicate error');
 	}
+	
+	function testReturnsErrorParameterNotArray(){
+		$inarray = 'temp';
+		$outarray = $this->model->validate($inarray);
+		$this->assertEqual($outarray, 0,
+				'It should return 0 when the the parameter is not an array');
+		$this->assertTrue($this->model->getError(),
+				'The EvalUrlModel error should be set to indicate error');
+	
+	}
+	
+	function testReturnsErrorWhenFieldsAreMissing(){
+		$inarray = array ('url_eval' => 'http://www.cs.utsa.edu');
+		$outarray = $this->model->validate($inarray);
+		$this->assertEqual($outarray, 0,
+				'It should return 0 when the there is no url category');
+		$this->assertTrue($this->model->getError(),
+				'The EvalUrlModel error should be set to indicate error');
+	}	
+
 }
 ?>

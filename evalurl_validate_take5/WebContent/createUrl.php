@@ -13,7 +13,7 @@ print_r($_POST);
 echo "<br>";
 
 $model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
-$model->createUrl($_POST);
+$model->create($_POST);
 echo $model->getError();
 
 ?>

@@ -12,9 +12,9 @@
 Make a comment on URL</p>
 
 <form  name="create_comment"  method="post" action="createComment.php">
-URL: <input type="text" name="url_eval" value="http://www.cs.utsa.edu"><br>
+URL: <input type="text" name="comment_url" value="http://www.cs.utsa.edu"><br>
 Comment: <br>
-<textarea name="comment_text" rows="20" cols="80" ></textarea><br>
+<textarea name="comment_body" rows="20" cols="80" ></textarea><br>
 <button type="submit" value="Submit">Submit</button>
 <button type="reset" value="Reset">Reset</button>
 </form>

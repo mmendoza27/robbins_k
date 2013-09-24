@@ -8,12 +8,12 @@
 
 <section>
 <?php 
-require_once('EvalUrlModel.php');
+require_once('EvalCommentModel.php');
 print_r($_POST);
 echo "<br>";
 
-$model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
-$model->createUrl($_POST);
+$model = new EvalCommentModel("localhost", "krobbins", "abc123", "evalurls");
+$model->create($_POST);
 echo $model->getError();
 
 ?>

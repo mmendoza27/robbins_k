@@ -9,7 +9,6 @@
 <section>
 <?php 
 require_once('EvalUrlModel.php');
-require_once('EvalUrl.php');
 print_r($_GET);
 echo "<br>";
 

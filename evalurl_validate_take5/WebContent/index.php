@@ -16,6 +16,10 @@
 </section>
 
 <section>
+<p>Enter a new comment: <a href="newComment.php">Link</a></p>
+</section>
+
+<section>
 Search for a URL on URL-NASH:
 <form  name="find_url"  method="get" action="findUrl.php">
 URL: <input type="text" name="url_eval" value="http://www.cs.utsa.edu"><br>

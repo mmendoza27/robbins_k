@@ -29,7 +29,7 @@ class test_EvalUrlModel extends UnitTestCase {
   	$newvals = array('url_eval' => 'http://www.cs.utsa943.edu',
   			'url_category' => 'first',
   			'url_description' => 'test');
-  	$this->model->createUrl($newvals);
+  	$this->model->create($newvals);
   	$this->assertEqual(0, $this->model->getError(), 
   			'createUrl should not produce an error when input is correct');
   	$this->assertEqual($this->model->getCount(), 1,
@@ -51,7 +51,7 @@ class test_EvalUrlModel extends UnitTestCase {
   		$newvals = array('url_eval' => "http://www.cs.utsa$k.edu",
   				         'url_category' => 'first',
   				         'url_description' => 'test');
-  		$this->model->createUrl($newvals);
+  		$this->model->create($newvals);
   	}
   	$this->assertEqual($this->model->getCount(), 10, 
   	         'The database should have 10 rows after inserting 10 URLs');
@@ -65,7 +65,7 @@ class test_EvalUrlModel extends UnitTestCase {
   		$newvals = array('url_eval' => "http://www.cs.utsa$k.edu",
   				'url_category' => 'first',
   				'url_description' => 'test');
-  		$this->model->createUrl($newvals);
+  		$this->model->create($newvals);
   	}
   	$this->assertEqual($this->model->getCount(), 10,
   			'The database should have 10 rows after inserting 10 URLs');

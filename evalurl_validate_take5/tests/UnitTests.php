@@ -5,6 +5,7 @@ class myGroupTest extends GroupTest {
     $this->addTestFile(dirname(__FILE__).'/test_EvalUrlModel.php');
     $this->addTestFile(dirname(__FILE__).'/test_EvalUrlModel_validate.php');
     $this->addTestFile(dirname(__FILE__).'/test_EvalUrl.php');
+    $this->addTestFile(dirname(__FILE__).'/test_EvalCommentModel_validate.php');
   }
 }
 ?>
