@@ -10,7 +10,6 @@
 <?php 
 require_once('EvalUrlModel.php');
 print_r($_POST);
-echo "<br>";
 
 $model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
 $model->create($_POST);
