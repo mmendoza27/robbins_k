@@ -25,7 +25,7 @@ class test_UrlModel extends UnitTestCase {
   function testCreateSimpleInsertion(){
   	$this->assertEqual($this->model->getCount(), 0,
   			'getCount should return 0 rows when database is empty');
-  	$newvals = array('url_eval' => 'http://www.cs.utsa943.edu',
+  	$newvals = array('url_name' => 'http://www.cs.utsa943.edu',
   			'url_category' => 'first',
   			'url_description' => 'test');
   	$this->model->create($newvals);
@@ -47,7 +47,7 @@ class test_UrlModel extends UnitTestCase {
   			'It should return 0 rows when database is empty');
 
   	for ($k = 1; $k <= 10; $k++) {
-  		$newvals = array('url_eval' => "http://www.cs.utsa$k.edu",
+  		$newvals = array('url_name' => "http://www.cs.utsa$k.edu",
   				         'url_category' => 'first',
   				         'url_description' => 'test');
   		$this->model->create($newvals);
@@ -61,7 +61,7 @@ class test_UrlModel extends UnitTestCase {
   			'It should return 0 rows when database is empty');
     
   	for ($k = 1; $k <= 10; $k++) {
-  		$newvals = array('url_eval' => "http://www.cs.utsa$k.edu",
+  		$newvals = array('url_name' => "http://www.cs.utsa$k.edu",
   				'url_category' => 'first',
   				'url_description' => 'test');
   		$this->model->create($newvals);
@@ -73,7 +73,7 @@ class test_UrlModel extends UnitTestCase {
   		$myUrl = "http://www.cs.utsa$k.edu";
   		$myResult = $this->model->getUrl($myUrl);
   		$this->assertTrue(is_array($myResult));
-  		$this->assertEqual(strcmp($myResult['url_eval'], $myUrl), 0);
+  		$this->assertEqual(strcmp($myResult['url_name'], $myUrl), 0);
   	}
   }
   

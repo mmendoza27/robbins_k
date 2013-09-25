@@ -13,7 +13,7 @@ print_r($_GET);
 echo "<br>";
 
 $model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
-$myUrl = $model->getUrl($_GET['url_eval']);
+$myUrl = $model->getUrl($_GET['url_name']);
 echo "<br>myUrl returns: ";
 print_r($myUrl);
 echo "<br>";

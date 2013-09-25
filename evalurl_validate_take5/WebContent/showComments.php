@@ -9,10 +9,10 @@
 
 <section>
 <?php 
-require_once('UrlModel.php');
-$model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
-while ($row = $model->nextUrl()) {
-	echo "URL: " . $row["url_eval"] . "<br>";
+require_once('CommentModel.php');
+$model = new CommentModel("localhost", "krobbins", "abc123", "evalurls");
+while ($row = $model->nextComment()) {
+	echo "URL:  " . $row['comment_url']. ": " . $row['comment_body'] . "<br>";
 }
 ?>
 

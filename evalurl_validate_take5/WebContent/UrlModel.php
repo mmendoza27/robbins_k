@@ -23,8 +23,8 @@ class UrlModel {
 			return;
 		}
 		$stmt = $this->db->prepare ( "INSERT INTO urls 
-				        (url_eval, url_description, url_category)
-		                VALUES (:url_eval, :url_description, :url_category)" );
+				        (url_name, url_description, url_category)
+		                VALUES (:url_name, :url_description, :url_category)" );
 		$stmt->execute ($vals);
 	}
 	
@@ -42,7 +42,7 @@ class UrlModel {
 	}
 	
 	public function getUrl($urlname) {
-		$stmt = $this->db->prepare ( "SELECT * FROM urls WHERE url_eval=?" );
+		$stmt = $this->db->prepare ( "SELECT * FROM urls WHERE url_name=?" );
 		$stmt->execute ( array ($urlname ) );
 		return $stmt->fetch ( PDO::FETCH_ASSOC );
 	}
@@ -59,14 +59,14 @@ class UrlModel {
 			$this->error = "Input argument not an array";
 			return 0;
 		}
-		if (!array_key_exists('url_eval', $vals) or !array_key_exists('url_category', $vals)
+		if (!array_key_exists('url_name', $vals) or !array_key_exists('url_category', $vals)
 		    or !array_key_exists('url_description', $vals)) {
 			$this->error = "Missing form field on create_url form";
 			return 0;
 		}
 		
-		$url_eval = trim ( filter_var ( $vals ['url_eval'], FILTER_SANITIZE_URL ) );
-		if (! filter_var ( $url_eval, FILTER_VALIDATE_URL )) {
+		$url_name = trim ( filter_var ( $vals ['url_name'], FILTER_SANITIZE_URL ) );
+		if (! filter_var ( $url_name, FILTER_VALIDATE_URL )) {
 			$this->error = "Invalid URL ";
 			return 0;
 		}
@@ -83,7 +83,7 @@ class UrlModel {
 // 				return 0;
 // 			}
 			
-		$newvals = array ('url_eval' => $url_eval,'url_category' => $url_category,
+		$newvals = array ('url_name' => $url_name,'url_category' => $url_category,
 				          'url_description' => $url_description);
 		return $newvals;
 	}

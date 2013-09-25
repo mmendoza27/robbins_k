@@ -28,7 +28,7 @@ class CommentModel {
 			$this->error = "URL doesn't exist";
 		}
 		
-		$stmt = $this->db->prepare ( "INSERT INTO urlcomment 
+		$stmt = $this->db->prepare ( "INSERT INTO comments 
 				        (comment_url, comment_body)
 		                VALUES (:comment_url, :comment_body)" );
 		$stmt->execute ($vals);
@@ -36,7 +36,7 @@ class CommentModel {
 	
 	public function getCount() {
 		if (! isset ($this->results ) or ! $this->results) {
-			$stmt = $this->db->query ( "SELECT * FROM urlentry" );
+			$stmt = $this->db->query ( "SELECT * FROM comments" );
 			return $stmt->rowCount ();
 		} else {
 			return $this->results->rowCount ();
@@ -48,14 +48,14 @@ class CommentModel {
 	}
 	
 	public function getUrl($urlname) {
-		$stmt = $this->db->prepare ( "SELECT * FROM urlentry WHERE url_eval=?" );
+		$stmt = $this->db->prepare ( "SELECT * FROM urls WHERE url_name=?" );
 		$stmt->execute ( array ($urlname ) );
 		return $stmt->fetch ( PDO::FETCH_ASSOC );
 	}
 	
-	public function nextUrl() {
+	public function nextComment() {
 		if (!isset ( $this->results ) or ! $this->results) {
-			$this->results = $this->db->query ( 'SELECT * FROM urlentry' );
+			$this->results = $this->db->query ( 'SELECT * FROM comments' );
 		}
 		return $this->results->fetch ( PDO::FETCH_ASSOC );
 	}

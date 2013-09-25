@@ -12,7 +12,7 @@
 require_once('UrlModel.php');
 $model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
 while ($row = $model->nextUrl()) {
-	echo "URL: " . $row["url_eval"] . "<br>";
+	echo "URL: " . $row["url_name"] . "<br>";
 }
 ?>
 

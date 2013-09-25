@@ -22,7 +22,7 @@
 <section>
 Search for a URL on URL-NASH:
 <form  name="find_url"  method="get" action="findUrl.php">
-URL: <input type="text" name="url_eval" value="http://www.cs.utsa.edu"><br>
+URL: <input type="text" name="url_name" value="http://www.cs.utsa.edu"><br>
 <button type="submit" value="Submit">Submit</button>
 </form>
 </section>
