@@ -1,14 +1,14 @@
 <?php
-require_once(dirname(__FILE__). '/../WebContent/EvalUrlModel.php');
+require_once(dirname(__FILE__). '/../WebContent/UrlModel.php');
 class test_EvalUrlModel_validate extends UnitTestCase {
 	private $model;
 
 	function setUp() {
 		$con = mysqli_connect("localhost", "krobbins", "abc123", "evalurls_test");
-		$sql = "DELETE FROM urlentry";
+		$sql = "DELETE FROM urls";
 		mysqli_query($con, $sql);
 		mysqli_close($con);
-		$this->model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls_test");
+		$this->model = new UrlModel("localhost", "krobbins", "abc123", "evalurls_test");
 	}
 
 	function tearDown() {

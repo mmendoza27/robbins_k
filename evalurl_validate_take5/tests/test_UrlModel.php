@@ -1,26 +1,25 @@
 <?php
-require_once(dirname(__FILE__). '/../WebContent/EvalUrlModel.php');
-require_once(dirname(__FILE__). '/../WebContent/EvalUrl.php');
-class test_EvalUrlModel extends UnitTestCase {
+require_once(dirname(__FILE__). '/../WebContent/UrlModel.php');
+class test_UrlModel extends UnitTestCase {
 	private $model;
 	
 	function setUp() {
 		$con = mysqli_connect("localhost", "krobbins", "abc123", "evalurls_test");
-		$sql = "DELETE FROM urlentry";
+		$sql = "DELETE FROM urls";
 		mysqli_query($con, $sql);
 		mysqli_close($con);
-		$this->model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls_test");	
+		$this->model = new UrlModel("localhost", "krobbins", "abc123", "evalurls_test");	
 	}
 	
 	function tearDown() {
 		
 	}
 	
-  function testMakeEvalUrlModel(){
-  	$this->assertTrue(class_exists('EvalUrlModel'), 
-  			'The EvalUrlModel class should be defined');
-  	$this->assertTrue(is_a($this->model, 'EvalUrlModel'), 
-  			'EvalUrlModel should have a constructor');
+  function testMakeUrlModel(){
+  	$this->assertTrue(class_exists('UrlModel'), 
+  			'The UrlModel class should be defined');
+  	$this->assertTrue(is_a($this->model, 'UrlModel'), 
+  			'UrlModel should have a constructor');
   }
   
   function testCreateSimpleInsertion(){
@@ -81,7 +80,7 @@ class test_EvalUrlModel extends UnitTestCase {
   function testTryConnectionWithBadCredentials () {
   	$this->expectException();
   	//$this->expectError(new PatternExpectation("/Bad connection/i"));
-  	$mod = new EvalUrlModel ( "localhost", "jrobbins", "abc123", "evalurls_test" );
+  	$mod = new UrlModel ( "localhost", "jrobbins", "abc123", "evalurls_test" );
   	//$this->assertTrue(is_a($mod, 'EvalUrlModel'));
   	//$this->assertTrue($mod->getError());
   }

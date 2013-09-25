@@ -8,11 +8,11 @@
 
 <section>
 <?php 
-require_once('EvalUrlModel.php');
+require_once('UrlModel.php');
 print_r($_GET);
 echo "<br>";
 
-$model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
+$model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
 $myUrl = $model->getUrl($_GET['url_eval']);
 echo "<br>myUrl returns: ";
 print_r($myUrl);

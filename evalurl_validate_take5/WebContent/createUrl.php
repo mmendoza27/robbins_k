@@ -8,10 +8,10 @@
 
 <section>
 <?php 
-require_once('EvalUrlModel.php');
+require_once('UrlModel.php');
 print_r($_POST);
 
-$model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
+$model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
 $model->create($_POST);
 echo $model->getError();
 

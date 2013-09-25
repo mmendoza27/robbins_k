@@ -1,5 +1,5 @@
 <?php
-class EvalCommentModel {
+class CommentModel {
 	private $db;
 	private $error;
 	private $results;

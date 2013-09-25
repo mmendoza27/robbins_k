@@ -1,6 +1,5 @@
 <?php
-require_once ('EvalUrl.php');
-class EvalUrlModel {
+class UrlModel {
 	private $db;
 	private $error;
 	private $results;
