@@ -22,7 +22,7 @@ class UrlModel {
 		if (!$vals) {
 			return;
 		}
-		$stmt = $this->db->prepare ( "INSERT INTO urlentry 
+		$stmt = $this->db->prepare ( "INSERT INTO urls 
 				        (url_eval, url_description, url_category)
 		                VALUES (:url_eval, :url_description, :url_category)" );
 		$stmt->execute ($vals);
@@ -30,7 +30,7 @@ class UrlModel {
 	
 	public function getCount() {
 		if (! isset ($this->results ) or ! $this->results) {
-			$stmt = $this->db->query ( "SELECT * FROM urlentry" );
+			$stmt = $this->db->query ( "SELECT * FROM urls" );
 			return $stmt->rowCount ();
 		} else {
 			return $this->results->rowCount ();
@@ -42,14 +42,14 @@ class UrlModel {
 	}
 	
 	public function getUrl($urlname) {
-		$stmt = $this->db->prepare ( "SELECT * FROM urlentry WHERE url_eval=?" );
+		$stmt = $this->db->prepare ( "SELECT * FROM urls WHERE url_eval=?" );
 		$stmt->execute ( array ($urlname ) );
 		return $stmt->fetch ( PDO::FETCH_ASSOC );
 	}
 	
 	public function nextUrl() {
 		if (!isset ( $this->results ) or ! $this->results) {
-			$this->results = $this->db->query ( 'SELECT * FROM urlentry' );
+			$this->results = $this->db->query ( 'SELECT * FROM urls' );
 		}
 		return $this->results->fetch ( PDO::FETCH_ASSOC );
 	}
