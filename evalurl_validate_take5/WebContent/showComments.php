@@ -9,8 +9,8 @@
 
 <section>
 <?php 
-require_once('EvalUrlModel.php');
-$model = new EvalUrlModel("localhost", "krobbins", "abc123", "evalurls");
+require_once('UrlModel.php');
+$model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
 while ($row = $model->nextUrl()) {
 	echo "URL: " . $row["url_eval"] . "<br>";
 }
