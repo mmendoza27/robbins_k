@@ -9,8 +9,6 @@
 <section>
 <?php 
 require_once('CommentModel.php');
-print_r($_POST);
-echo "<br>";
 
 $model = new CommentModel("localhost", "krobbins", "abc123", "evalurls");
 $model->create($_POST);
