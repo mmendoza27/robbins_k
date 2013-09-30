@@ -9,9 +9,12 @@
 <section>
 <?php 
 require_once('CommentModel.php');
+require_once('ControllerFactory.php');
 
-$model = new CommentModel("localhost", "krobbins", "abc123", "evalurls");
+$db = ControllerFactory::buildDb("localhost", "krobbins", "abc123", "evalurls");
+$model = new CommentModel($db);
 $model->create($_POST);
+
 echo $model->getError();
 
 ?>

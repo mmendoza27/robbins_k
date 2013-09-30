@@ -7,6 +7,9 @@ class UserController {
 		$this->$db = $db;
 	}
 	
+	
+	
+	
 }
 
 ?>

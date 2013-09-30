@@ -4,17 +4,9 @@ class CommentModel {
 	private $error;
 	private $results;
 
-	public function __construct($hostname, $username, $userpass, $dbname) {
-		//try {
-			$this->error = 0;
-			$hostStr = "mysql:host=$hostname;dbname=$dbname;charset=utf8";
-			$this->db = new PDO ( $hostStr, $username, $userpass );
-			$this->db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			$this->db->setAttribute ( PDO::ATTR_EMULATE_PREPARES, false );
-		//} catch(PDOException $pe) {
-		//	$this->error = "Bad connection: ".$pe->getMessage();
-		//}
-
+	public function __construct($db) {
+		$this->db = $db;
+        $this->error = 0;
 	}
 	
 	public function create($vals) {
