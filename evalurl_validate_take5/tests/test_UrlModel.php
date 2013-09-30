@@ -8,7 +8,8 @@ class test_UrlModel extends UnitTestCase {
 		$sql = "DELETE FROM urls";
 		mysqli_query($con, $sql);
 		mysqli_close($con);
-		$this->model = new UrlModel("localhost", "krobbins", "abc123", "evalurls_test");	
+		$db = ControllerFactory::buildDb("localhost", "krobbins", "abc123", "evalurls_test");
+		$this->model = new UrlModel($db);	
 	}
 	
 	function tearDown() {
@@ -78,9 +79,11 @@ class test_UrlModel extends UnitTestCase {
   }
   
   function testTryConnectionWithBadCredentials () {
-  	$this->expectException();
+  	//$this->expectException();
   	//$this->expectError(new PatternExpectation("/Bad connection/i"));
-  	$mod = new UrlModel ( "localhost", "jrobbins", "abc123", "evalurls_test" );
+  	$db = ControllerFactory::buildDb("localhost", "jrobbins", "abc123", "evalurls_test");
+  	$this->assertEqual($db, null);
+  	$this->model = new UrlModel($db);
   	//$this->assertTrue(is_a($mod, 'EvalUrlModel'));
   	//$this->assertTrue($mod->getError());
   }

@@ -9,10 +9,12 @@
 <section>
 <?php 
 require_once('UrlModel.php');
+require_once('ControllerFactory.php');
 require_once('dumpSupers.php');
 dumpSupers("Entering createUrl");
 
-$model = new UrlModel("localhost", "krobbins", "abc123", "evalurls");
+$db = ControllerFactory::buildDb("localhost", "krobbins", "abc123", "evalurls");
+$model = new UrlModel($db);
 $model->create($_POST);
 echo "<br><br>----";
 echo $model->getError();
