@@ -29,14 +29,15 @@ class UrlModel {
 		}
 	}
 	
-	public function getError() {
-		return $this->error;
+	public function get($urlName) {
+		$urlName = $this->validateName($urlName);
+		$stmt = $this->db->prepare ("SELECT * FROM urls WHERE url_name=?" );
+		$stmt->execute ( array ($urlName ) );
+		return $stmt->fetch ( PDO::FETCH_ASSOC );
 	}
 	
-	public function getUrl($urlname) {
-		$stmt = $this->db->prepare ( "SELECT * FROM urls WHERE url_name=?" );
-		$stmt->execute ( array ($urlname ) );
-		return $stmt->fetch ( PDO::FETCH_ASSOC );
+	public function getError() {
+		return $this->error;
 	}
 	
 	public function nextUrl() {
@@ -48,37 +49,37 @@ class UrlModel {
 	
 	public function validate($vals) {
 		if (!is_array($vals)) {
-			$this->error = "Input argument not an array";
-			return 0;
-		}
-		if (!array_key_exists('url_name', $vals) or !array_key_exists('url_category', $vals)
+			throw new Exception("UrlModel:validate---Input argument not an array");
+		} else if (!array_key_exists('url_name', $vals) or !array_key_exists('url_category', $vals)
 		    or !array_key_exists('url_description', $vals)) {
-			$this->error = "Missing form field on create_url form";
-			return 0;
+			throw new Exception("UrlModel:validate---Missing form field on create_url form");
 		}
 		
 		$url_name = trim ( filter_var ( $vals ['url_name'], FILTER_SANITIZE_URL ) );
 		if (! filter_var ( $url_name, FILTER_VALIDATE_URL )) {
-			$this->error = "Invalid URL ";
-			return 0;
+			throw new Exception("UrlModel:validate---Invalid URL");
 		}
 		
 		$url_category = trim ( filter_var ( $vals ['url_category'], FILTER_SANITIZE_STRING ) );
 		if (!$url_category or strlen($url_category)==0) {
-			$this->error = "Invalid URL category";
-			return 0;
+			throw new Exception("UrlModel:validate---Invalid URL category");
 		}
 	
 		$url_description = trim ( filter_var ( $vals ['url_description'], FILTER_SANITIZE_STRING ) );
-// 			if (!$url_description) {
-// 				$this->error = "Invalid URL description";
-// 				return 0;
-// 			}
-			
+
 		$newvals = array ('url_name' => $url_name,'url_category' => $url_category,
 				          'url_description' => $url_description);
 		return $newvals;
 	}
+	
+	public function validateName($inName) {
+  	   $url_name = trim ( filter_var ( $inName, FILTER_SANITIZE_URL ) );
+	   if (! filter_var ( $url_name, FILTER_VALIDATE_URL )) {
+		   throw new Exception("UrlModel:validateName---Invalid URL");
+	   } 
+	   return $url_name;
+	}
+	
 }
 
 ?>

@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__). '/../WebContent/UrlModel.php');
+require_once(dirname(__FILE__). '/../WebContent/ControllerFactory.php');
 class test_UrlModel extends UnitTestCase {
 	private $model;
 	
@@ -72,7 +73,7 @@ class test_UrlModel extends UnitTestCase {
   	
   	for ($k = 1; $k <= 10; $k++) {
   		$myUrl = "http://www.cs.utsa$k.edu";
-  		$myResult = $this->model->getUrl($myUrl);
+  		$myResult = $this->model->get($myUrl);
   		$this->assertTrue(is_array($myResult));
   		$this->assertEqual(strcmp($myResult['url_name'], $myUrl), 0);
   	}

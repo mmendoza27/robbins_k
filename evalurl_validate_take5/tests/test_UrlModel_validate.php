@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__). '/../WebContent/UrlModel.php');
-class test_EvalUrlModel_validate extends UnitTestCase {
+require_once(dirname(__FILE__). '/../WebContent/ControllerFactory.php');
+class test_UrlModel_validate extends UnitTestCase {
 	private $model;
 
 	function setUp() {
@@ -8,7 +9,8 @@ class test_EvalUrlModel_validate extends UnitTestCase {
 		$sql = "DELETE FROM urls";
 		mysqli_query($con, $sql);
 		mysqli_close($con);
-		$this->model = new UrlModel("localhost", "krobbins", "abc123", "evalurls_test");
+		$db = ControllerFactory::buildDb("localhost", "krobbins", "abc123", "evalurls_test");
+		$this->model = new UrlModel($db);	
 	}
 
 	function tearDown() {
@@ -16,33 +18,23 @@ class test_EvalUrlModel_validate extends UnitTestCase {
 	}
 	
 	function testReturnsErrorWhenProtocolIsMissing(){
-		$inarray = array ('url_eval' => 'www.cs.utsa.edu',
+		$this->expectException(new PatternExpectation("/Invalid URL/i"));
+		$inarray = array ('url_name' => 'www.cs.utsa.edu',
 				          'url_category' => 'First',
 				          'url_description' => 'My description');
 		$outarray = $this->model->validate($inarray);
-		$this->assertEqual($outarray, 0, 
-		         'It should return 0 when the protocol is missing');
-		$this->assertTrue($this->model->getError(),
-				 'The EvalUrlModel error should be set to indicate error');
 	}
 	
 	function testReturnsErrorParameterNotArray(){
+		$this->expectException(new PatternExpectation("/Input argument not an array/i"));
 		$inarray = 'temp';
-		$outarray = $this->model->validate($inarray);
-		$this->assertEqual($outarray, 0,
-				'It should return 0 when the the parameter is not an array');
-		$this->assertTrue($this->model->getError(),
-				'The EvalUrlModel error should be set to indicate error');
-	
+		$outarray = $this->model->validate($inarray);	
 	}
 	
 	function testReturnsErrorWhenFieldsAreMissing(){
+		$this->expectException(new PatternExpectation("/Missing form field/i"));
 		$inarray = array ('url_eval' => 'http://www.cs.utsa.edu');
 		$outarray = $this->model->validate($inarray);
-		$this->assertEqual($outarray, 0,
-				'It should return 0 when the there is no url category');
-		$this->assertTrue($this->model->getError(),
-				'The EvalUrlModel error should be set to indicate error');
 	}	
 
 }
