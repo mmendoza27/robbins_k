@@ -12,8 +12,8 @@
 Did you find a web site that is notable --- for great design, innovative features, unusual
 approach or shameful use of web technology? Just fill in this form and get the URL-NASH community chew on it!</p>
 
-<form  name="create_url"  method="post" action="createUrl.php">
-<input type="hidden" name="url_controller" value="create" />
+<form  name="create_url"  method="post" action="controller.php">
+<input type="hidden" name="url_controller" value="new" />
 URL: <input type="text" name="url_name" value="http://www.cs.utsa.edu"><br>
 Category: <br>
 <input type="radio" name="url_category" value="best" checked>Best in class<br>

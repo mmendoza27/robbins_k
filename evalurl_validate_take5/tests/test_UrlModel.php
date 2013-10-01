@@ -31,8 +31,6 @@ class test_UrlModel extends UnitTestCase {
   			'url_category' => 'first',
   			'url_description' => 'test');
   	$this->model->create($newvals);
-  	$this->assertEqual(0, $this->model->getError(), 
-  			'createUrl should not produce an error when input is correct');
   	$this->assertEqual($this->model->getCount(), 1,
   			'createUrl should increase the number of database rows by 1');
   }

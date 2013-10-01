@@ -6,7 +6,11 @@ function dumpSupers($msg)  {
 	print_r( $_POST );
 	
 	echo "<br><h3>Session:</h3>";
+	if (isset($_SESSION)) {
 	print_r ( $_SESSION );
+	} else {
+		echo '$_SESSION is not set';
+	}
 	
 	echo "<br><h3>Cookie:</h3>";
 	print_r ( $_COOKIE );

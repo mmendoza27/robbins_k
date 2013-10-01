@@ -1,12 +1,10 @@
 <?php
 class UrlModel {
 	private $db;
-	private $error;
 	private $results;
 
 	public function __construct($db) {
         $this->db = $db;
-        $this->error = 0;
 	}
 	
 	public function create($vals) {
@@ -36,10 +34,6 @@ class UrlModel {
 		return $stmt->fetch ( PDO::FETCH_ASSOC );
 	}
 	
-	public function getError() {
-		return $this->error;
-	}
-	
 	public function nextUrl() {
 		if (!isset ( $this->results ) or ! $this->results) {
 			$this->results = $this->db->query ( 'SELECT * FROM urls' );
@@ -50,7 +44,9 @@ class UrlModel {
 	public function validate($vals) {
 		if (!is_array($vals)) {
 			throw new Exception("UrlModel:validate---Input argument not an array");
-		} else if (!array_key_exists('url_name', $vals) or !array_key_exists('url_category', $vals)
+		} 
+		
+		if (!array_key_exists('url_name', $vals) or !array_key_exists('url_category', $vals)
 		    or !array_key_exists('url_description', $vals)) {
 			throw new Exception("UrlModel:validate---Missing form field on create_url form");
 		}

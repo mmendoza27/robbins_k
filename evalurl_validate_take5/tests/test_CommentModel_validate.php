@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__). '/../WebContent/CommentModel.php');
 require_once(dirname(__FILE__). '/../WebContent/ControllerFactory.php');
-class test_EvalCommentModel_validate extends UnitTestCase {
+class test_CommentModel_validate extends UnitTestCase {
 	private $model;
 
 	function setUp() {
@@ -17,7 +17,7 @@ class test_EvalCommentModel_validate extends UnitTestCase {
 	}
 	
 	function testReturnsErrorWhenProtocolIsMissing(){
-		$this->expectException(new PatternExpectation("/Invalid URL/i"));
+		$this->expectException();
 		$inarray = array ('comment_url' => 'www.cs.utsa.edu',
 				          'comment_body' => 'Test description');
 		$outarray = $this->model->validate($inarray);
