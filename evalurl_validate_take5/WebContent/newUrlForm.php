@@ -4,7 +4,7 @@ function newUrlForm ($errors) {
     ob_start();
     if (is_array($errors)) {    
  ?>
-    	<ul class="errors">
+    	<ul class='errors'>
     	   <?php foreach($errors as $error) { echo "<li>$error</li>"; } ?>
     	</ul>
 <?php }?>
