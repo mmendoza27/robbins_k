@@ -7,7 +7,7 @@ function dumpSupers($msg)  {
 	
 	echo "<br><h3>Session:</h3>";
 	if (isset($_SESSION)) {
-	print_r ( $_SESSION );
+	    print_r ( $_SESSION );
 	} else {
 		echo '$_SESSION is not set';
 	}

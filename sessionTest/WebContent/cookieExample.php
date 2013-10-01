@@ -1,6 +1,6 @@
 <?php 
 if (!array_key_exists('CountCookie', $_COOKIE)) {
-	$count = 0;
+	$count = 1;
 } else {
 	$count = $_COOKIE['CountCookie'];
 	$count++;
