@@ -9,9 +9,6 @@ class UrlModel {
 	
 	public function create($vals) {
 		$vals = $this->validate ( $vals );
-		if (!$vals) {
-			return;
-		}
 		$stmt = $this->db->prepare ( "INSERT INTO urls 
 				        (url_name, url_description, url_category)
 		                VALUES (:url_name, :url_description, :url_category)" );
