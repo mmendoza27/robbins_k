@@ -14,4 +14,5 @@ Calling a qualified function from a different namespace:<br>
 <h3>Test 3:</h3>
 Use autoloader rather than require:<br>
 <a href="./Library/myapp3.php">Click here</a><br>
+
 </body></html>
