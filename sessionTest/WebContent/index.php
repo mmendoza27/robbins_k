@@ -26,6 +26,7 @@
   }
   ?>
   
+  
   <h3>Here are direct links to the login and profile pages if you want to
   test directly</h3>
   <a href="login.php">login</a><br/>
