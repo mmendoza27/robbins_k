@@ -1,8 +1,8 @@
 <?php
-// application library 2
-namespace AppLib2;
+// application library 1
+namespace AppLib1;
 
-const MYCONST = 'AppLib2MYCONST';
+const MYCONST = 'AppLib1MYCONST';
 
 function MyFunction() {
 	return "My method is: " . __FUNCTION__;
@@ -10,7 +10,7 @@ function MyFunction() {
 
 class MyClass {
 	static function WhoAmI() {
-		return "My -2-static method is: " . __METHOD__;
+		return "My -4-static method is: " . __METHOD__;
 	}
 }
 ?>
