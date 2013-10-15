@@ -1,12 +1,10 @@
 <?php
 require_once(dirname(__FILE__). '/../WebContent/controllers/FrontController.php');
 class test_FrontController extends UnitTestCase {
-	private $infile;
-	private $outfile;
+
 	
 	function setUp() {
-		$this->infile = dirname(__FILE__). '/../WebContent/images/Jellyfish.jpg';
-		$this->outfile = dirname(__FILE__). '/../WebContent/images/TestJellyfish.jpg';
+
 	}
 	
 	function tearDown() {
