@@ -1,15 +1,10 @@
 <?php
 class Response {
-  private $responses;
-  private $headers;
+  private $responses = array();
+  private $headers = array();
+  private $response_sent = false;
   
   public function __construct() {
-      $this->headers = array();
-      $this->responses = array();
-  }
-  
-  public function getVersion() {
-    return $this->version;
   }
   
   public function addHeader($header) {
@@ -24,16 +19,37 @@ class Response {
     return $this;
   }
   
+  public function addResponse($response) {
+  	$this->responses[] = $response;
+  	return $this;
+  }
+  
+  public function addResponses(array $responses) {
+  	foreach ($responses as $response) {
+  		$this->addResponse($response);
+  	}
+  	return $this;
+  }
+  
   public function getHeaders() {
     return $this->headers;
   }
   
+  public function getResponses() {
+  	return $this->responses;
+  }
+  
   public function send() {
-    if (!headers_sent()) {
+    if (!$this->response_sent) {
       foreach($this->headers as $header) {
-        header("$this->version $header", true);
+        header($header, true);
       }
-    }
+      foreach($this->responses as $response) {
+      	echo($response);
+      }
+      $this->response_sent = true;
+    }  
+    return $this;
   }
 }
 ?>
