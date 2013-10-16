@@ -10,14 +10,18 @@ class FrontController {
     protected $params        = array();
     protected $db            = null;
     protected $basePath      = "evalurl_master";
+    protected $request;
+    protected $response;
      
     public function __construct(array $options = array()) {
+    	$this->request = new Request();
+    	$this->response = new Response();
         if (empty($options)) {
-           $this->initialize();
+           $this->initializeUri($_SERVER["REQUEST_URI"]);
         }
         else {
             if (isset($options["controller"])) {
-                $this->setController($options["controller"]);
+                $this->setAction($options["controller"]);
             }
             if (isset($options["action"])) {
                 $this->setAction($options["action"]);    
@@ -27,11 +31,12 @@ class FrontController {
             }
         }
         $this->params['db'] = $this->buildDb("localhost", "krobbins", "abc123", "evalurls");
+        $this->request = new Request();
+        $this->response = new Response();
     }
      
-    protected function initialize() {
-        $path = trim(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH), "/");
-        echo "Parsing URI: $path<br>";
+    public function initializeUri($uri) {
+        $path = trim(parse_url($uri, PHP_URL_PATH), "/");
         $path = preg_replace('/[^a-zA-Z0-9\/_]/', "", $path);
         if (strpos($path, $this->basePath) === 0) { // starts with basePath
             $path = substr($path, strlen($this->basePath));
@@ -39,9 +44,8 @@ class FrontController {
         if (strpos($path, '/') === 0) { //remove leading /
         	$path = substr($path, 1);
         }
-        echo "Path is: $path<br>";
+    
         @list($controller, $action, $params) = explode("/", $path, 3);
-        echo "controller = $controller <br>";
         if (isset($controller) && strlen($controller) > 0) {
             $this->setController($controller);
         }
@@ -53,15 +57,20 @@ class FrontController {
         } 
       
     }
+    
+    public function getValues() { // for debugging
+    	return array("controller" => $this->controller,
+    	             "action" => $this->action,
+    	             "params" => $this->params);
+    }
      
     public function setController($controller) {
-    	echo "<br>In setController: $controller<br>";
         $controller = ucfirst(strtolower($controller)) . "Controller";
         if (!class_exists($controller)) {
             throw new InvalidArgumentException(
                 "The action controller '$controller' has not been defined.");
         }
-        $this->controller = $controller;
+        $this->request->setParam('controller', $controller);
         return $this;
     }
      
@@ -71,7 +80,7 @@ class FrontController {
             throw new InvalidArgumentException(
                 "The controller action '$action' has been not defined.");
         }
-        $this->action = $action;
+        $this->request->setParam('action', $action);
         return $this;
     }
      

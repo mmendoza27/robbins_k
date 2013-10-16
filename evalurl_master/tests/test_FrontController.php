@@ -19,6 +19,15 @@ class test_FrontController extends UnitTestCase {
   	$testFront->run();
   }
   
+  function testInitializeUri(){
+  	$myTest = array("controller"=>"test", "action"=>"show", "params" => array("This is a test"));
+  	$testFront = new FrontController($myTest);
+  	$uri = "/evalurl_master/url/show/0";
+  	$testFront->initializeUri($uri);
+  	$newVals = $testFront->getValues();
+  	$this->assertTrue($newValues('controller') == 'UriController');
+  }
+  
  
 }
 ?>
