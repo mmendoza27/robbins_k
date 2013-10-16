@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__). '/../WebContent/controllers/FrontController.php');
+require_once(dirname(__FILE__). '/../WebContent/controllers/TestController.php');
 class test_FrontController extends UnitTestCase {
 
 	
@@ -13,21 +14,20 @@ class test_FrontController extends UnitTestCase {
 	}
 	
   function testMakeFrontController(){
-  	$myTest = array("controller"=>"test", "action"=>"show", "params" => array("This is a test"));
-  	$testFront = new FrontController($myTest);
-  	$this->assertTrue(is_a($testFront, 'FrontController'));
-  	$testFront->run();
+//   	$myTest = array("controller"=>"TestController", "action"=>"show", "params" => array("This is a test"));
+//   	$testFront = new FrontController($myTest);
+//   	$this->assertTrue(is_a($testFront, 'FrontController'));
+//   	$testFront->run();
   }
   
   function testInitializeUri(){
-  	$myTest = array("controller"=>"test", "action"=>"show", "params" => array("This is a test"));
-  	$testFront = new FrontController($myTest);
-  	$uri = "/evalurl_master/url/show/0";
-  	$testFront->initializeUri($uri);
-  	$newVals = $testFront->getValues();
-  	$this->assertTrue($newValues('controller') == 'UriController');
-  }
-  
- 
+  	$_SERVER["REQUEST_URI"] = "/evalurl_master/url/show/0";
+  	$testFront = new FrontController();
+  	$this->assertTrue(is_a($testFront, 'FrontController'), 'initializeUrl should return a Front Controller');
+  	$req = $testFront->getRequest();
+  	$this->assertTrue(is_a($req, 'Request'), 'FrontController:getRequest should return a request object');
+  	$ctrl = $req->getController();
+  	$this->assertTrue($ctrl == 'UrlController', "The controller should be UrlController, but is $ctrl<br ");
+  } 
 }
 ?>

@@ -52,6 +52,14 @@ class Request {
   	return $this;
   }
   
+  public function setParams($params) {
+  	$keys = array_keys($params);
+  	foreach($keys as $key) {
+  	   $this->params[$key] = $params[$key];
+  	}
+  	return $this;
+  }
+  
   public function setRequest($request) {
   	$this->$request = $request;
   	return $this;

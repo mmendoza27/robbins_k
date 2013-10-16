@@ -5,39 +5,26 @@ class FrontController {
     const DEFAULT_CONTROLLER = "IndexController";
     const DEFAULT_ACTION     = "index";
      
-    protected $controller    = self::DEFAULT_CONTROLLER;
-    protected $action        = self::DEFAULT_ACTION;
-    protected $params        = array();
-    protected $db            = null;
     protected $basePath      = "evalurl_master";
     protected $request;
     protected $response;
      
-    public function __construct(array $options = array()) {
+    public function __construct($options = null) {
     	$this->request = new Request();
     	$this->response = new Response();
-        if (empty($options)) {
-           $this->initializeUri($_SERVER["REQUEST_URI"]);
+        if (!isset($options) || $options == null) {
+           $vals = $this->initializeUri($_SERVER["REQUEST_URI"]);
+           $this->setOptions($vals);
+        } else {
+           $this->setOptions($options);
         }
-        else {
-            if (isset($options["controller"])) {
-                $this->setAction($options["controller"]);
-            }
-            if (isset($options["action"])) {
-                $this->setAction($options["action"]);    
-            }
-            if (isset($options["params"])) {
-                $this->setParams($options["params"]);
-            }
-        }
-        $this->params['db'] = $this->buildDb("localhost", "krobbins", "abc123", "evalurls");
-        $this->request = new Request();
-        $this->response = new Response();
+        $this->request->setParam('db', $this->buildDb("localhost", "krobbins", "abc123", "evalurls"));
     }
      
     public function initializeUri($uri) {
         $path = trim(parse_url($uri, PHP_URL_PATH), "/");
         $path = preg_replace('/[^a-zA-Z0-9\/_]/', "", $path);
+        echo "path in initializeUri: $path <br>";
         if (strpos($path, $this->basePath) === 0) { // starts with basePath
             $path = substr($path, strlen($this->basePath));
         }
@@ -46,23 +33,55 @@ class FrontController {
         }
     
         @list($controller, $action, $params) = explode("/", $path, 3);
-        if (isset($controller) && strlen($controller) > 0) {
-            $this->setController($controller);
-        }
-        if (isset($action) && strlen($action) > 0) {
-            $this->setAction($action);
-        }
-        if (isset($params) && strlen($params) > 0) {
-            $this->setParams(explode("/", $params));
-        } 
-      
+        $vals = ["controller" => $controller, "action" => $action, "params" => array($params)];
+        echo "In initialization 1: ";
+        print_r($vals);
+        $vals2 = array("abc" => "abcd");
+        print_r($vals2);
+        return $vals;
+    }
+        
+    public function setOptions($options) {
+    	echo "<br>In set options: ";
+    	print_r($options);
+		if (isset ($options ["controller"] ) && strlen ( $options["controller"]) > 0 ) {
+			echo "setting a controller<br>";
+			$this->setController ( $options ["controller"] );
+		} else {
+			$this->request->setController ( self::DEFAULT_CONTROLLER );
+			echo "setting default controller ";
+		}
+		echo $this->request->getController () . " <br>";
+		if (isset ( $options ["action"] ) && strlen ( $options ["action"]) > 0) {
+			$this->setAction ( $options ["action"] );
+		} else {
+			$this->request->setAction ( self::DEFAULT_ACTION );
+		}
+		if (isset ($options ["params"])) {
+			$this->setParams ( $options ["params"] );
+		}
+		echo "Set options<br>";
+		print_r ( $options );
+		return $this;     
     }
     
-    public function getValues() { // for debugging
-    	return array("controller" => $this->controller,
-    	             "action" => $this->action,
-    	             "params" => $this->params);
+    public function getRequest() { // for debugging
+    	return $this->request;
     }
+    
+    public function getResponse() { // for debugging
+    	return $this->response;
+    }
+    
+    public function setAction($action) {
+    	$reflector = new ReflectionClass($this->request->getController());
+    	if (!$reflector->hasMethod($action)) {
+    		throw new InvalidArgumentException(
+    				"The controller action '$action' has been not defined.");
+    	}
+    	$this->request->setAction($action);
+    	return $this;
+    } 
      
     public function setController($controller) {
         $controller = ucfirst(strtolower($controller)) . "Controller";
@@ -70,22 +89,12 @@ class FrontController {
             throw new InvalidArgumentException(
                 "The action controller '$controller' has not been defined.");
         }
-        $this->request->setParam('controller', $controller);
-        return $this;
-    }
-     
-    public function setAction($action) {
-        $reflector = new ReflectionClass($this->controller);
-        if (!$reflector->hasMethod($action)) {
-            throw new InvalidArgumentException(
-                "The controller action '$action' has been not defined.");
-        }
-        $this->request->setParam('action', $action);
+        $this->request->setController($controller);
         return $this;
     }
      
     public function setParams(array $params) {
-        $this->params = $params;
+        $this->request->setParams($params);
         return $this;
     }
     
@@ -103,7 +112,12 @@ class FrontController {
     }
      
     public function run() {
-        call_user_func_array(array(new $this->controller, $this->action), $this->params);
+    	$args = array("request" => $this->request, "response" => $this->response);
+    	//$funs = array($this->request->getController(), $this->request->getAction());
+    	$funs = array('UrlController', 'show');
+    	print_r($args);
+    	print_r($funs);
+        call_user_func_array($funs, $args);
     }
 }
 ?>

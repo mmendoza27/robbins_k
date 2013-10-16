@@ -1,14 +1,13 @@
 <?php 
  class UrlController {
-    private $model;
+    private $request;
+	private $response;
+	private $model;
     
-    public function __construct(array $options = array()) {
-        if (empty($options) || !is_array_key('db')) {
-           $this->model = null;
-        }
-        else {
-        	$this->model = new UrlModel($options('db'));
-        }
+    public function __construct($request, $response) {
+         $this->request = $request;
+         $this->response = $response;
+         $this->model = new UrlModel($request->getParam('db'));
     }
     
     public function create() {

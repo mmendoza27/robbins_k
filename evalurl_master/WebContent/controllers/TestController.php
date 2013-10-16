@@ -1,10 +1,12 @@
 <?php 
 
 class TestController {
-	private $model;
+	private $request;
+	private $response;
 	
-	public function __construct(array $options = array()) {
-         $this->model = null;
+	public function __construct($request, $response) {
+         $this->request = $request;
+         $this->response = $response;
 	}
 
 	 public function show($var) {
