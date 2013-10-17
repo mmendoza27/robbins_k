@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+	function validateForm() {
+		var x = document.forms["myForm"]["fname"].value;
+		if (x == null || x == "") {
+			document.forms["myForm"]["fname"].style.backgroundColor = "red";
+			document.getElementById("errors").innerHTML = "Fill in the name please";
+			document.getElementById("errors").style.backgroundColor = "cyan";
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+
+<body>
+<form name="myForm" action="valex_form.php" onsubmit="return validateForm()" method="post">
+First name: <input type="text" name="fname">
+<input type="submit" value="Submit">
+</form>
+<div id="errors"></div>
+</body>
+
+</html>
