@@ -7,7 +7,7 @@
 		$this->response = $response;
 	}
     public function index () {
-       echo "in index controller calling index<br>";
+       $this->response->addResponse("Index controller: Index method being executed");
     }
 }
 ?>

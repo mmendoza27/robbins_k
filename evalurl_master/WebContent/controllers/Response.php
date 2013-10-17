@@ -1,10 +1,13 @@
 <?php
 class Response {
-  private $responses = array();
-  private $headers = array();
-  private $response_sent = false;
+  private $responses;
+  private $headers;
+  private $response_sent;
   
   public function __construct() {
+  	$this->responses = array();
+  	$this->headers = array();
+  	$this->response_sent = false;
   }
   
   public function addHeader($header) {
@@ -45,7 +48,7 @@ class Response {
         header($header, true);
       }
       foreach($this->responses as $response) {
-      	echo($response);
+      	echo $response;
       }
       $this->response_sent = true;
     }  

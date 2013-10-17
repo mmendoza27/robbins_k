@@ -11,19 +11,19 @@
     }
     
     public function create() {
-    	echo "Url create me this";
+    	$this->response->addResponse("Url controller: Create method being executed");
     }
     
     public function index() {
-    	echo "Url index me this";
+   	$this->response->addResponse("Url controller: Index method being executed");
     }
     
     public function showall() {
-    	echo "Url showall me this";
+    	$this->response->addResponse("Url controller: Showall method being executed");
     }
     
     public function show() {
-    	echo "Url show me this";
+      	$this->response->addResponse("Url controller: Show method being executed");
     }
  }
 ?>

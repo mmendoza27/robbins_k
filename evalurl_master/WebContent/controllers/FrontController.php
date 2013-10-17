@@ -24,7 +24,6 @@ class FrontController {
     public function initializeUri($uri) {
         $path = trim(parse_url($uri, PHP_URL_PATH), "/");
         $path = preg_replace('/[^a-zA-Z0-9\/_]/', "", $path);
-        echo "path in initializeUri: $path <br>";
         if (strpos($path, $this->basePath) === 0) { // starts with basePath
             $path = substr($path, strlen($this->basePath));
         }
@@ -33,35 +32,23 @@ class FrontController {
         }
     
         @list($controller, $action, $params) = explode("/", $path, 3);
-        $vals = ["controller" => $controller, "action" => $action, "params" => array($params)];
-        echo "In initialization 1: ";
-        print_r($vals);
-        $vals2 = array("abc" => "abcd");
-        print_r($vals2);
-        return $vals;
+        return ["controller" => $controller, "action" => $action, "params" => array($params)];
     }
         
     public function setOptions($options) {
-    	echo "<br>In set options: ";
-    	print_r($options);
 		if (isset ($options ["controller"] ) && strlen ( $options["controller"]) > 0 ) {
-			echo "setting a controller<br>";
 			$this->setController ( $options ["controller"] );
 		} else {
-			$this->request->setController ( self::DEFAULT_CONTROLLER );
-			echo "setting default controller ";
+			$this->setController ( self::DEFAULT_CONTROLLER );
 		}
-		echo $this->request->getController () . " <br>";
-		if (isset ( $options ["action"] ) && strlen ( $options ["action"]) > 0) {
-			$this->setAction ( $options ["action"] );
+		if (isset ($options ["action"]) && strlen ($options ["action"]) > 0) {
+			$this->setAction ($options ["action"]);
 		} else {
-			$this->request->setAction ( self::DEFAULT_ACTION );
+			$this->setAction ( self::DEFAULT_ACTION );
 		}
 		if (isset ($options ["params"])) {
 			$this->setParams ( $options ["params"] );
 		}
-		echo "Set options<br>";
-		print_r ( $options );
 		return $this;     
     }
     
@@ -112,12 +99,12 @@ class FrontController {
     }
      
     public function run() {
-    	$args = array("request" => $this->request, "response" => $this->response);
-    	//$funs = array($this->request->getController(), $this->request->getAction());
-    	$funs = array('UrlController', 'show');
-    	print_r($args);
-    	print_r($funs);
-        call_user_func_array($funs, $args);
+    	$reflect = new ReflectionClass($this->request->getController());
+    	$obj = $reflect->newInstanceArgs([$this->request, $this->response]);
+    	$method = new ReflectionMethod($this->request->getController(),  
+    			$this->request->getAction());
+    	$method->invoke($obj);
+    	$this->response->send();
     }
 }
 ?>

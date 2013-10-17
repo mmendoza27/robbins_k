@@ -38,7 +38,7 @@ class Request {
   
 
   public function setAction($action) {
-  	$this->$action = $action;
+  	$this->action = $action;
   	return $this;
   }
   
@@ -61,12 +61,12 @@ class Request {
   }
   
   public function setRequest($request) {
-  	$this->$request = $request;
+  	$this->request = $request;
   	return $this;
   }
   
   public function setUri($uri) {
-  	$this->$uri = $uri;
+  	$this->uri = $uri;
   	return $this;
   }
   

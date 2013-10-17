@@ -16,6 +16,7 @@ class test_Response extends UnitTestCase {
   	$myTest = new Response();
   	$this->assertTrue(is_a($myTest, 'Response'), 'You should be able to create a Response Object');
   	$myTest->addResponse('my');
+  	$myTest->addResponse('bags');
   	$myTest->addHeader('head');
   	$ret = $myTest->send();
   	$this->assertTrue($ret,'You should be able to add headers after responses');
