@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function sethandlers() {
+	document.getElementById("myBtn").onclick=function(){displayDate()};
+}
+
+function displayDate() {
+    document.getElementById("demo").innerHTML=Date();
+ }
+</script>
+</head>
+<body onload = "sethandlers()">
+
+<h1>My First JavaScript</h1>
+
+<p id="demo">This is a paragraph.</p>
+
+<button id = "myBtn">Display Date</button>
+
+</body>
+</html> 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<h1>Sets event handlers in DOM</h1>
+
+<p>Click the button to execute the <em>displayDate()</em> function.</p>
+
+<button id="myBtn">Try it</button>
+<p id="demo"></p>
+
+
+<script>
+   document.getElementById("myBtn").onclick=function(){displayDate()};
+   function displayDate() {
+      document.getElementById("demo").innerHTML=Date();
+   }
+</script>
+
+</body>
+</html> 
