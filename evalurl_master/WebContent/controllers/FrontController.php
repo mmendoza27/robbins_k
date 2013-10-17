@@ -2,7 +2,7 @@
 //require_once (realpath($_SERVER["DOCUMENT_ROOT"] . "/evalurl_master/autoload.php"));
 require_once (dirname(__FILE__). '/../autoload.php');
 class FrontController {
-    const DEFAULT_CONTROLLER = "IndexController";
+    const DEFAULT_CONTROLLER = "Index";
     const DEFAULT_ACTION     = "index";
      
     protected $basePath      = "evalurl_master";
