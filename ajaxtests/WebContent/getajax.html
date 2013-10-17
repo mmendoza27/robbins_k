@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+	function loadXMLDoc() {
+		var xmlhttp;
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+			}
+		}
+		var fval = document.forms["myform"]["fname"].value;
+		var lval = document.forms["myform"]["lname"].value;
+		var req = "getdate2.php?fname=" + fval + "&lname=" + lval;
+		xmlhttp.open("GET", req, true);
+		xmlhttp.send();
+	}
+</script>
+</head>
+<body>
+
+	<h2>AJAX</h2>
+	<form name="myform">
+		First name: <input type="text" name="fname" required><br>
+		Last name: <input type="text" name="lname" required> <br>
+		<button type="button" onclick="loadXMLDoc()">Request data</button>
+		<div id="myDiv"></div>
+    </form>
+    
+    <div><a href="index.html">Back to home</a></div>
+</body>
+</html>
